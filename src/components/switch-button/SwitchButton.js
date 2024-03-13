@@ -3,7 +3,7 @@ import './styles.css'
 class SwitchButton extends Component {
   handleToggle = () => {
     const { isChecked, onChange } = this.props;
-    onChange(!isChecked);
+    onChange && onChange(!isChecked);
   };
 
   render() {
