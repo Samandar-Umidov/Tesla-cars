@@ -1,10 +1,19 @@
 import { Component } from "react";
 import CarOver from "../../assets/car-over.png";
-import CarIn from "../../assets/car-inside.png";
 import "./styles.css";
 import arrowUp from "../../assets/arrow-up.svg";
 import arrowDown from "../../assets/arrow-down.svg";
 import SwitchButton from "../switch-button/SwitchButton";
+
+import CarIn from "../../assets/car-inside.png";
+import CarWhite from "../../assets/car-bright.png";
+import CarBright from "../../assets/car-white.png";
+
+const carColors = {
+  black: CarIn,
+  bright: CarBright,
+  white: CarWhite,
+}
 
 export default class Overview extends Component {
   constructor(props) {
@@ -13,6 +22,7 @@ export default class Overview extends Component {
       speed: 60,
       temp: 20,
       showIn: false,
+      carImg: CarIn 
     };
   }
 
@@ -25,7 +35,7 @@ export default class Overview extends Component {
       <div className="overview">
         {/*  ======== Overview image ========= */}
         <img
-          src={this.state.showIn ? CarIn : CarOver}
+          src={this.state.showIn ? this.state.carImg : CarOver}
           className="overview__image"
           alt="car-over"
           width={1240}
@@ -47,7 +57,23 @@ export default class Overview extends Component {
         {/*  ======== Car price and max speed end ========= */}
         {/*  ======== Diteils start ========= */}
         <ul className="car-diteils">
-          <li className="card-diteils__item">
+          {
+            this.state.showIn 
+             ? (
+              <li className="card-diteils__item">
+                <div>
+                  <span className="label-md">Температура за окнами</span>
+                  <div className="colors-wrap">
+                    <span className="colors__item black" onClick={() => this.setState({...this.state, carImg: carColors.black})}></span>
+                    <span className="colors__item bright" onClick={() => this.setState({...this.state, carImg: carColors.bright})}></span>
+                    <span className="colors__item white" onClick={() => this.setState({...this.state, carImg: carColors.white})}></span>
+                  </div>
+                </div>
+              </li>
+             )
+             : (
+              <>
+                <li className="card-diteils__item">
             <div>
               <span className="label-md">Скорость автомобиля</span>
               <h4 className="typography-2">{this.state.speed} км/ч</h4>
@@ -119,6 +145,9 @@ export default class Overview extends Component {
               </div>
             </div>
           </li>
+              </>
+             )
+          }
           <li className="card-diteils__item">
             <div>
               <span className="label-md">Вид автомобиля</span>
@@ -136,3 +165,4 @@ export default class Overview extends Component {
     );
   }
 }
+
